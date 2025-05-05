@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shopping_app/pages/home.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -34,19 +35,27 @@ class _OnboardingState extends State<Onboarding> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
-                  padding: EdgeInsets.all(30),
-                  margin: EdgeInsets.only(right: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Text(
-                    'Next',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Home()),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(30),
+                    margin: EdgeInsets.only(right: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text(
+                      'Next',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
