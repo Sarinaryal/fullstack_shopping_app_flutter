@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shopping_app/pages/bottom_nav.dart';
 import 'package:flutter_shopping_app/pages/onboarding.dart';
+import 'package:flutter_shopping_app/pages/product_detail.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,15 +21,16 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
           titleLarge: TextStyle(
             color: Colors.black,
-                fontSize: 28.0,
-                fontWeight: FontWeight.bold,
+            fontSize: 28.0,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
-      
 
-      home: Onboarding(),
+      //home: Onboarding(),
       //home: Home(),
+      //home: BottomNav(),
+      home: ProductDetail(),
     );
   }
 }
