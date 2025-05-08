@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shopping_app/pages/home.dart';
 import 'package:flutter_shopping_app/pages/bottom_nav.dart';
+import 'package:flutter_shopping_app/pages/login.dart';
 import 'package:flutter_shopping_app/pages/onboarding.dart';
 import 'package:flutter_shopping_app/pages/product_detail.dart';
+//import 'package:flutter_shopping_app/pages/product_detail.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,8 +32,10 @@ class MyApp extends StatelessWidget {
 
       //home: Onboarding(),
       //home: Home(),
+
       //home: BottomNav(),
-      home: ProductDetail(),
+      //home: ProductDetail(),
+      home: Login(),
     );
   }
 }

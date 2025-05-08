@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shopping_app/pages/bottom_nav.dart';
 import 'package:flutter_shopping_app/widget/support_widget.dart';
 
 class Home extends StatefulWidget {
@@ -19,6 +20,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xfff2f2f2),
+     
       body: Container(
         margin: EdgeInsets.only(top: 40, left: 20, right: 20),
         child: Column(
@@ -259,6 +261,8 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
+
+      
     );
   }
 }

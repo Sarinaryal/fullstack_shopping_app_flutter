@@ -31,19 +31,20 @@ class _OnboardingState extends State<Onboarding> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 GestureDetector(
                   onTap: () {
+                    //print('tapped');
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Home()),
                     );
                   },
                   child: Container(
-                    padding: EdgeInsets.all(30),
+                    padding: EdgeInsets.all(15),
                     margin: EdgeInsets.only(right: 20),
                     decoration: BoxDecoration(
                       color: Colors.black,
@@ -53,7 +54,7 @@ class _OnboardingState extends State<Onboarding> {
                       'Next',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
