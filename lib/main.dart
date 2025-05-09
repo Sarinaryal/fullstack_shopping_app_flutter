@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shopping_app/pages/home.dart';
 import 'package:flutter_shopping_app/pages/bottom_nav.dart';
@@ -7,7 +8,9 @@ import 'package:flutter_shopping_app/pages/product_detail.dart';
 import 'package:flutter_shopping_app/pages/signup.dart';
 //import 'package:flutter_shopping_app/pages/product_detail.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
