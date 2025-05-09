@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shopping_app/pages/home.dart';
+import 'package:flutter_shopping_app/pages/login.dart';
 import 'package:flutter_shopping_app/widget/support_widget.dart';
 
 class ProductDetail extends StatefulWidget {
@@ -90,21 +92,29 @@ class _ProductDetailState extends State<ProductDetail> {
                     ),
                     SizedBox(height: 70),
 
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFfd6f3e),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      width: MediaQuery.of(context).size.width,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Login()),
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFfd6f3e),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        width: MediaQuery.of(context).size.width,
 
-                      child: Center(
-                        child: Text(
-                          "Buy Now",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                        child: Center(
+                          child: Text(
+                            "Buy Now",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ),

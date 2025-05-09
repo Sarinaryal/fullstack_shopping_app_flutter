@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_shopping_app/pages/bottom_nav.dart';
+import 'package:flutter_shopping_app/pages/product_detail.dart';
 import 'package:flutter_shopping_app/widget/support_widget.dart';
 
 class Home extends StatefulWidget {
@@ -20,7 +21,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xfff2f2f2),
-     
+
       body: Container(
         margin: EdgeInsets.only(top: 40, left: 20, right: 20),
         child: Column(
@@ -165,44 +166,54 @@ class _HomeState extends State<Home> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Column(
-                      children: [
-                        Image.asset(
-                          "images/headphone2.png",
-                          height: 150,
-                          width: 150,
-                          fit: BoxFit.cover,
-                        ),
-                        Text('Headphone', style: AppWidget.mediumTextStyle()),
-                        SizedBox(height: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductDetail(),
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            "images/headphone2.png",
+                            height: 150,
+                            width: 150,
+                            fit: BoxFit.cover,
+                          ),
+                          Text('Headphone', style: AppWidget.mediumTextStyle()),
+                          SizedBox(height: 10),
 
-                        Row(
-                          children: [
-                            Text(
-                              '\$100',
-                              style: TextStyle(
-                                color: Colors.deepOrangeAccent,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
+                          Row(
+                            children: [
+                              Text(
+                                '\$100',
+                                style: TextStyle(
+                                  color: Colors.deepOrangeAccent,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
 
-                            SizedBox(width: 50),
-                            Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                color: Colors.deepOrangeAccent,
-                                borderRadius: BorderRadius.circular(6),
+                              SizedBox(width: 50),
+                              Container(
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                  color: Colors.deepOrangeAccent,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
                               ),
-                              child: Icon(
-                                Icons.add,
-                                color: Colors.white,
-                                size: 18,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
 
@@ -261,8 +272,6 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-
-      
     );
   }
 }
