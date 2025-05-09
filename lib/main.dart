@@ -34,12 +34,12 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      home: Onboarding(),
+      //home: Onboarding(),
       //home: Home(),
       //home: BottomNav(),
       //home: ProductDetail(),
       //home: Login(),
-      //home: Signup(),
+      home: Signup(),
     );
   }
 }
