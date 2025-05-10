@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shopping_app/pages/bottom_nav.dart';
 import 'package:flutter_shopping_app/pages/login.dart';
+import 'package:flutter_shopping_app/services/database.dart';
 import 'package:flutter_shopping_app/widget/support_widget.dart';
+import 'package:random_string/random_string.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -37,6 +39,21 @@ class _SignupState extends State<Signup> {
             ),
           ),
         );
+
+        //Storing the user details in database
+
+        String Id = randomAlphaNumeric(10);
+
+        Map<String, dynamic> userInfoMap = {
+          "Name": namecontroller.text,
+          "Email": mailcontroller.text,
+          "Id": Id,
+          "Image": 'images/boy.jpg',
+        };
+
+        //upload the data to database
+
+        await DatabaseMethods().addUserDetails(userInfoMap, Id);
 
         Navigator.push(
           context,
