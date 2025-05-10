@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_shopping_app/pages/bottom_nav.dart';
 import 'package:flutter_shopping_app/pages/login.dart';
 import 'package:flutter_shopping_app/services/database.dart';
+import 'package:flutter_shopping_app/services/shared_pref.dart';
 import 'package:flutter_shopping_app/widget/support_widget.dart';
 import 'package:random_string/random_string.dart';
 
@@ -40,9 +41,15 @@ class _SignupState extends State<Signup> {
           ),
         );
 
-        //Storing the user details in database
-
         String Id = randomAlphaNumeric(10);
+
+        //saving user data on shared prefrences
+        await SharedPreferenceHelper().saveUserEmail(mailcontroller.text);
+        await SharedPreferenceHelper().saveUserId(Id);
+        await SharedPreferenceHelper().saveUserName(namecontroller.text);
+        await SharedPreferenceHelper().saveUserImage('images/boy.jpg');
+
+        //Storing the user details in database
 
         Map<String, dynamic> userInfoMap = {
           "Name": namecontroller.text,
