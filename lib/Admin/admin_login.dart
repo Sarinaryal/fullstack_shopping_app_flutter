@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shopping_app/Admin/add_product.dart';
+import 'package:flutter_shopping_app/Admin/home_admin.dart';
 import 'package:flutter_shopping_app/pages/bottom_nav.dart';
 import 'package:flutter_shopping_app/pages/home.dart';
 import 'package:flutter_shopping_app/widget/support_widget.dart';
@@ -144,7 +146,7 @@ class _AdminLoginState extends State<AdminLogin> {
         } else {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => BottomNav()),
+            MaterialPageRoute(builder: (context) => AddProduct()),
           );
         }
       });

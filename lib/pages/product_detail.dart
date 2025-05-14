@@ -23,10 +23,12 @@ class _ProductDetailState extends State<ProductDetail> {
             Stack(
               children: [
                 GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  //Container for back icon
+                 onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Home()),
+                        );
+                      },
                   child: Container(
                     margin: EdgeInsets.only(left: 20),
 

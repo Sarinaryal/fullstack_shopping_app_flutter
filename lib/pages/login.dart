@@ -27,7 +27,10 @@ class _LoginState extends State<Login> {
         password: password,
       );
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => BottomNav()),
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -72,12 +75,6 @@ class _LoginState extends State<Login> {
                     child: Text('Sign In', style: AppWidget.mediumTextStyle()),
                   ),
                   SizedBox(height: 20),
-
-                  Text(
-                    'Please enter the details below to \n                    continue',
-                    style: AppWidget.lightTextFieldStyle(),
-                  ),
-                  SizedBox(height: 40),
 
                   //Input Email field
                   Text('Email', style: AppWidget.mediumTextStyle()),

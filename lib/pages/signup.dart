@@ -111,13 +111,6 @@ class _SignupState extends State<Signup> {
                   ),
                   SizedBox(height: 20),
 
-                  Text(
-                    'Please enter the details below to \n                    continue',
-                    style: AppWidget.lightTextFieldStyle(),
-                  ),
-
-                  SizedBox(height: 40),
-
                   //Input User-Name field
                   Text('Name', style: AppWidget.mediumTextStyle()),
                   SizedBox(height: 10),
