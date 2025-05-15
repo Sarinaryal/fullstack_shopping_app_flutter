@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+//import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shopping_app/services/cloudinary_upload.dart';
+import 'package:flutter_shopping_app/services/database.dart';
 import 'package:flutter_shopping_app/widget/support_widget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:random_string/random_string.dart';
@@ -15,25 +17,91 @@ class AddProduct extends StatefulWidget {
 }
 
 class _AddProductState extends State<AddProduct> {
-  final ImagePicker _picker = ImagePicker();
-  File? selectedImage;
+  //final ImagePicker _picker = ImagePicker();
+  File? _selectedImage;
+  String? _uploadedImageUrl;
   TextEditingController namecontroller = new TextEditingController();
 
-  Future getImage() async {
-    var image = await _picker.pickImage(source: ImageSource.gallery);
-    selectedImage = File(image!.path);
-    setState(() {});
-  }
+  Future<void> _pickAndUploadImage() async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: ImageSource.gallery);
 
-  uploadItem() {
-    if (selectedImage != null && namecontroller.text != "") {
+    if (picked != null && namecontroller.text != "") {
       String addId = randomAlphaNumeric(10);
-      Reference firebaseStorageRef = FirebaseStorage.instance
-          .ref()
-          .child('blogImage')
-          .child(addId);
+      setState(() {
+        _selectedImage = File(picked.path);
+      });
+
+      final url = await uploadImageToCloudinary(File(picked.path));
+
+      setState(() {
+        _uploadedImageUrl = url;
+      });
+
+      //get all data
+      Map<String, dynamic> addProduct = {
+        "Name": namecontroller.text,
+        "Image": url,
+      };
+
+      await DatabaseMethods().addProduct(addProduct, value!).then((value) {
+        // if we wanr to remove this image
+        _uploadedImageUrl = null;
+        namecontroller.text = '';
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.redAccent,
+            content: Text(
+              'Product uploaded successfully!',
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+        );
+      });
+
+      
     }
   }
+
+  // Future getImage() async {
+  //   var image = await _picker.pickImage(source: ImageSource.gallery);
+  //   _selectedImage = File(image!.path);
+  //   setState(() {});
+  // }
+
+  // uploadItem() {
+  //   if (selectedImage != null && namecontroller.text != "") {
+  //     String addId = randomAlphaNumeric(10);
+  //     Reference firebaseStorageRef = FirebaseStorage.instance
+  //         .ref()
+  //         .child('blogImage')
+  //         .child(addId);
+
+  //     final UploadTask task = firebaseStorageRef.putFile(selectedImage!);
+
+  //     var downloadurl = await(await task.ref.getDownloadURL());
+
+  //     //get all data
+  //     Map<String, dynamic> addProduct = {
+  //       "Name" : namecontroller.text,
+  //       "Image" : downloadurl,
+  //     };
+  //     await DatabaseMethods().addProduct(addProduct, value!).then((value){
+  //       // if we wanr to remove this image
+  //       selectedImage = null;
+  //       namecontroller.text = '';
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //           SnackBar(
+  //             backgroundColor: Colors.redAccent,
+  //             content: Text(
+  //               'Password Provided is too weak',
+  //               style: TextStyle(fontSize: 20),
+  //             ),
+  //           ),
+  //         );
+  //     });
+  //   }
+  // }
 
   //list of dropdown icons
   final List<String> categoryitems = ['Watch', 'Laptop', 'TV', 'Headphones'];
@@ -64,17 +132,42 @@ class _AddProductState extends State<AddProduct> {
             ),
             SizedBox(height: 20),
 
-            Center(
-              child: Container(
-                height: 150,
-                width: 150,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 2),
-                  borderRadius: BorderRadius.circular(20),
+            _uploadedImageUrl == null
+                ? GestureDetector(
+                  onTap: _pickAndUploadImage,
+                  child: Center(
+                    child: Container(
+                      height: 150,
+                      width: 150,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black, width: 2),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Icon(Icons.camera_alt_outlined),
+                    ),
+                  ),
+                )
+                : Center(
+                  child: Material(
+                    elevation: 4.0,
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      height: 150,
+                      width: 150,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black, width: 2),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          _uploadedImageUrl!,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                child: Icon(Icons.camera_alt_outlined),
-              ),
-            ),
             SizedBox(height: 20),
 
             //Product Name TextField
@@ -134,10 +227,12 @@ class _AddProductState extends State<AddProduct> {
             ),
             SizedBox(height: 30),
 
-            //btn
+            //Add product btn
             Center(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _pickAndUploadImage();
+                },
                 child: Text('Add Product', style: TextStyle(fontSize: 22)),
               ),
             ),

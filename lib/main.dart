@@ -10,10 +10,22 @@ import 'package:flutter_shopping_app/pages/product_detail.dart';
 import 'package:flutter_shopping_app/pages/signup.dart';
 //import 'package:flutter_shopping_app/pages/product_detail.dart';
 
+import 'package:cloudinary_url_gen/cloudinary.dart';
+import 'package:cloudinary_flutter/cloudinary_context.dart';
+import 'package:cloudinary_flutter/image/cld_image.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  //Cloudinary Setup here
+  CloudinaryContext.cloudinary = Cloudinary.fromCloudName(
+    cloudName: 'your_cloud_name', // Replace with your actual cloud name
+  );
+  
   runApp(const MyApp());
+
+  
 }
 
 class MyApp extends StatelessWidget {
@@ -41,9 +53,10 @@ class MyApp extends StatelessWidget {
       //home: BottomNav(),
       //home: ProductDetail(),
       //home: Login(),
-      home: Signup(),
+      //home: Signup(),
       //home: AdminLogin(),
-      //home: AddProduct(),
+      home: AddProduct(),
+      //home: UploadPage(),
     );
   }
 }
