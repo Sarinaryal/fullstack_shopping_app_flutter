@@ -21,6 +21,8 @@ class _AddProductState extends State<AddProduct> {
   File? _selectedImage;
   String? _uploadedImageUrl;
   TextEditingController namecontroller = new TextEditingController();
+  TextEditingController pricecontroller = new TextEditingController();
+  TextEditingController detailcontroller = new TextEditingController();
 
   //list of dropdown icons
   final List<String> categoryitems = ['Watch', 'Laptop', 'TV', 'Headphones'];
@@ -43,13 +45,15 @@ class _AddProductState extends State<AddProduct> {
     }
   }
 
-    Future<void> _uploadImage() async {
-      if (_uploadedImageUrl != null && namecontroller.text != "") {
+  Future<void> _uploadImage() async {
+    if (_uploadedImageUrl != null && namecontroller.text != "") {
       String addId = randomAlphaNumeric(10);
 
       Map<String, dynamic> addProduct = {
         "Name": namecontroller.text,
         "Image": _uploadedImageUrl,
+        "Price": pricecontroller.text,
+        "Detail": detailcontroller.text,
       };
 
       await DatabaseMethods().addProduct(addProduct, value!).then((value) {
@@ -66,51 +70,7 @@ class _AddProductState extends State<AddProduct> {
         );
       });
     }
-    
-    }
-
-
-     
-
-  // Future getImage() async {
-  //   var image = await _picker.pickImage(source: ImageSource.gallery);
-  //   _selectedImage = File(image!.path);
-  //   setState(() {});
-  // }
-
-  // uploadItem() {
-  //   if (selectedImage != null && namecontroller.text != "") {
-  //     String addId = randomAlphaNumeric(10);
-  //     Reference firebaseStorageRef = FirebaseStorage.instance
-  //         .ref()
-  //         .child('blogImage')
-  //         .child(addId);
-
-  //     final UploadTask task = firebaseStorageRef.putFile(selectedImage!);
-
-  //     var downloadurl = await(await task.ref.getDownloadURL());
-
-  //     //get all data
-  //     Map<String, dynamic> addProduct = {
-  //       "Name" : namecontroller.text,
-  //       "Image" : downloadurl,
-  //     };
-  //     await DatabaseMethods().addProduct(addProduct, value!).then((value){
-  //       // if we wanr to remove this image
-  //       selectedImage = null;
-  //       namecontroller.text = '';
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(
-  //             backgroundColor: Colors.redAccent,
-  //             content: Text(
-  //               'Password Provided is too weak',
-  //               style: TextStyle(fontSize: 20),
-  //             ),
-  //           ),
-  //         );
-  //     });
-  //   }
-  // }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,123 +85,162 @@ class _AddProductState extends State<AddProduct> {
         title: Text('Add Product', style: AppWidget.mediumTextStyle()),
         centerTitle: true,
       ),
-      body: Container(
-        margin: EdgeInsets.only(left: 20, top: 20, right: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //Upload Image Section
-            Text(
-              'Upload the product image',
-              style: AppWidget.lightTextFieldStyle(),
-            ),
-            SizedBox(height: 20),
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 100),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //Upload Image Section
+              Text(
+                'Upload the product image',
+                style: AppWidget.lightTextFieldStyle(),
+              ),
+              SizedBox(height: 20),
 
-            _uploadedImageUrl == null
-                ? GestureDetector(
-                  onTap: _pickImage,
-                  child: Center(
-                    child: Container(
-                      height: 150,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 2),
-                        borderRadius: BorderRadius.circular(20),
+              _uploadedImageUrl == null
+                  ? GestureDetector(
+                    onTap: _pickImage,
+                    child: Center(
+                      child: Container(
+                        height: 150,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 2),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Icon(Icons.camera_alt_outlined),
                       ),
-                      child: Icon(Icons.camera_alt_outlined),
                     ),
-                  ),
-                )
-                : Center(
-                  child: Material(
-                    elevation: 4.0,
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      height: 150,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 2),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.network(
-                          _uploadedImageUrl!,
-                          fit: BoxFit.cover,
+                  )
+                  : Center(
+                    child: Material(
+                      elevation: 4.0,
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        height: 150,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 2),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.network(
+                            _uploadedImageUrl!,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
                   ),
+              SizedBox(height: 20),
+
+              //Product Name TextField
+              Text('Product Name', style: AppWidget.lightTextFieldStyle()),
+              SizedBox(height: 10),
+
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Color(0xFFececf8),
+                  borderRadius: BorderRadius.circular(20),
                 ),
-            SizedBox(height: 20),
-
-            //Product Name TextField
-            Text('Product Name', style: AppWidget.lightTextFieldStyle()),
-            SizedBox(height: 10),
-
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Color(0xFFececf8),
-                borderRadius: BorderRadius.circular(20),
+                child: TextField(
+                  controller: namecontroller,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
               ),
-              child: TextField(
-                controller: namecontroller,
-                decoration: InputDecoration(border: InputBorder.none),
-              ),
-            ),
-            SizedBox(height: 20),
+              SizedBox(height: 20),
 
-            //Product-category Dropdown
-            Text('Product Category', style: AppWidget.lightTextFieldStyle()),
-            SizedBox(height: 10),
+              //Product Price TextField
+              Text('Product Price', style: AppWidget.lightTextFieldStyle()),
+              SizedBox(height: 10),
 
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Color(0xFFececf8),
-                borderRadius: BorderRadius.circular(10),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Color(0xFFececf8),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: TextField(
+                  controller: pricecontroller,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
               ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  items:
-                      categoryitems
-                          .map(
-                            (item) => DropdownMenuItem(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: AppWidget.mediumTextStyle(),
+              SizedBox(height: 20),
+
+              //Product Detail TextField
+              Text('Product Detail', style: AppWidget.lightTextFieldStyle()),
+              SizedBox(height: 10),
+
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Color(0xFFececf8),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: TextField(
+                  maxLines: 6,
+                  controller: detailcontroller,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ),
+              SizedBox(height: 20),
+
+              //Product-category Dropdown
+              Text('Product Category', style: AppWidget.lightTextFieldStyle()),
+              SizedBox(height: 10),
+
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Color(0xFFececf8),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    items:
+                        categoryitems
+                            .map(
+                              (item) => DropdownMenuItem(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: AppWidget.mediumTextStyle(),
+                                ),
                               ),
-                            ),
-                          )
-                          .toList(),
-                  onChanged:
-                      (value) => setState(() {
-                        this.value = value;
-                      }),
-                  dropdownColor: Colors.white,
-                  hint: Text('Select Category'),
-                  iconSize: 36,
-                  icon: Icon(Icons.arrow_drop_down, color: Colors.black),
-                  value: value,
+                            )
+                            .toList(),
+                    onChanged:
+                        (value) => setState(() {
+                          this.value = value;
+                        }),
+                    dropdownColor: Colors.white,
+                    hint: Text('Select Category'),
+                    iconSize: 36,
+                    icon: Icon(Icons.arrow_drop_down, color: Colors.black),
+                    value: value,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 30),
+              SizedBox(height: 30),
 
-            //Add product btn
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  _uploadImage();
-                },
-                child: Text('Add Product', style: TextStyle(fontSize: 22)),
+              //Add product btn
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    _uploadImage();
+                  },
+                  child: Text('Add Product', style: TextStyle(fontSize: 22)),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

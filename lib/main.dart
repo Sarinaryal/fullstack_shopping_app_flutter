@@ -22,10 +22,8 @@ Future<void> main() async {
   CloudinaryContext.cloudinary = Cloudinary.fromCloudName(
     cloudName: 'your_cloud_name', // Replace with your actual cloud name
   );
-  
-  runApp(const MyApp());
 
-  
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -50,12 +48,12 @@ class MyApp extends StatelessWidget {
 
       //home: Onboarding(),
       //home: Home(),
-      //home: BottomNav(),
+      home: BottomNav(),
       //home: ProductDetail(),
       //home: Login(),
       //home: Signup(),
       //home: AdminLogin(),
-      home: AddProduct(),
+      //home: AddProduct(),
       //home: UploadPage(),
     );
   }
