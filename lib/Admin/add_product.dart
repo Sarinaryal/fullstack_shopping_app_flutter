@@ -22,12 +22,15 @@ class _AddProductState extends State<AddProduct> {
   String? _uploadedImageUrl;
   TextEditingController namecontroller = new TextEditingController();
 
-  Future<void> _pickAndUploadImage() async {
+  //list of dropdown icons
+  final List<String> categoryitems = ['Watch', 'Laptop', 'TV', 'Headphones'];
+  String? value;
+
+  Future<void> _pickImage() async {
     final picker = ImagePicker();
     final picked = await picker.pickImage(source: ImageSource.gallery);
 
-    if (picked != null && namecontroller.text != "") {
-      String addId = randomAlphaNumeric(10);
+    if (picked != null) {
       setState(() {
         _selectedImage = File(picked.path);
       });
@@ -37,15 +40,19 @@ class _AddProductState extends State<AddProduct> {
       setState(() {
         _uploadedImageUrl = url;
       });
+    }
+  }
 
-      //get all data
+    Future<void> _uploadImage() async {
+      if (_uploadedImageUrl != null && namecontroller.text != "") {
+      String addId = randomAlphaNumeric(10);
+
       Map<String, dynamic> addProduct = {
         "Name": namecontroller.text,
-        "Image": url,
+        "Image": _uploadedImageUrl,
       };
 
       await DatabaseMethods().addProduct(addProduct, value!).then((value) {
-        // if we wanr to remove this image
         _uploadedImageUrl = null;
         namecontroller.text = '';
         ScaffoldMessenger.of(context).showSnackBar(
@@ -58,10 +65,12 @@ class _AddProductState extends State<AddProduct> {
           ),
         );
       });
-
-      
     }
-  }
+    
+    }
+
+
+     
 
   // Future getImage() async {
   //   var image = await _picker.pickImage(source: ImageSource.gallery);
@@ -103,10 +112,6 @@ class _AddProductState extends State<AddProduct> {
   //   }
   // }
 
-  //list of dropdown icons
-  final List<String> categoryitems = ['Watch', 'Laptop', 'TV', 'Headphones'];
-
-  String? value;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,7 +139,7 @@ class _AddProductState extends State<AddProduct> {
 
             _uploadedImageUrl == null
                 ? GestureDetector(
-                  onTap: _pickAndUploadImage,
+                  onTap: _pickImage,
                   child: Center(
                     child: Container(
                       height: 150,
@@ -231,7 +236,7 @@ class _AddProductState extends State<AddProduct> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  _pickAndUploadImage();
+                  _uploadImage();
                 },
                 child: Text('Add Product', style: TextStyle(fontSize: 22)),
               ),
