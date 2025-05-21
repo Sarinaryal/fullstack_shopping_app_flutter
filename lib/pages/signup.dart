@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_shopping_app/pages/bottom_nav.dart';
 import 'package:flutter_shopping_app/pages/login.dart';
@@ -43,11 +44,16 @@ class _SignupState extends State<Signup> {
 
         String Id = randomAlphaNumeric(10);
 
+        //...
+        int randomIndex = Random().nextInt(100);
+        String imageUrl =
+            'https://randomuser.me/api/portraits/men/$randomIndex.jpg';
+
         //saving user data on shared prefrences
         await SharedPreferenceHelper().saveUserEmail(mailcontroller.text);
         await SharedPreferenceHelper().saveUserId(Id);
         await SharedPreferenceHelper().saveUserName(namecontroller.text);
-        await SharedPreferenceHelper().saveUserImage('images/boy.jpg');
+        await SharedPreferenceHelper().saveUserImage(imageUrl);
 
         //Storing the user details in database
 
@@ -55,7 +61,7 @@ class _SignupState extends State<Signup> {
           "Name": namecontroller.text,
           "Email": mailcontroller.text,
           "Id": Id,
-          "Image": 'images/boy.jpg',
+          "Image": imageUrl,
         };
 
         //upload the data to database
