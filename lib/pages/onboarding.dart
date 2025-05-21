@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_shopping_app/pages/home.dart';
+import 'package:flutter_shopping_app/pages/signup.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -40,11 +41,11 @@ class _OnboardingState extends State<Onboarding> {
                     //print('tapped');
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Home()),
+                      MaterialPageRoute(builder: (context) => Signup()),
                     );
                   },
                   child: Container(
-                    padding: EdgeInsets.all(15),
+                    padding: EdgeInsets.all(10),
                     margin: EdgeInsets.only(right: 20),
                     decoration: BoxDecoration(
                       color: Colors.black,

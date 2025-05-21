@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shopping_app/pages/product_detail.dart';
 import 'package:flutter_shopping_app/services/database.dart';
 import 'package:flutter_shopping_app/widget/support_widget.dart';
 
@@ -76,16 +77,32 @@ class _CategoryProductState extends State<CategoryProduct> {
                           ),
 
                           SizedBox(width: 20),
-                          Container(
-                            padding: EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              color: Colors.deepOrangeAccent,
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
-                              size: 18,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => ProductDetail(
+                                        image: ds["Image"],
+                                        name: ds["Name"],
+                                        detail: ds["Detail"],
+                                        price: ds["Price"],
+                                      ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                color: Colors.deepOrangeAccent,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Icon(
+                                Icons.add,
+                                color: Colors.white,
+                                size: 18,
+                              ),
                             ),
                           ),
                         ],

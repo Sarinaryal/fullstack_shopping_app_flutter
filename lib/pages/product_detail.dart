@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shopping_app/pages/bottom_nav.dart';
 import 'package:flutter_shopping_app/pages/home.dart';
 import 'package:flutter_shopping_app/pages/login.dart';
 import 'package:flutter_shopping_app/widget/support_widget.dart';
 
 class ProductDetail extends StatefulWidget {
-  const ProductDetail({super.key});
+  final String image, name, detail, price;
+  const ProductDetail({
+    super.key,
+    required this.image,
+    required this.name,
+    required this.detail,
+    required this.price,
+  });
 
   @override
   State<ProductDetail> createState() => _ProductDetailState();
@@ -22,13 +30,13 @@ class _ProductDetailState extends State<ProductDetail> {
           children: [
             Stack(
               children: [
+                //product-detail image container
+                Center(child: Image.network(widget.image, height: 400)),
+
                 GestureDetector(
-                 onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Home()),
-                        );
-                      },
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                   child: Container(
                     margin: EdgeInsets.only(left: 20),
 
@@ -41,10 +49,7 @@ class _ProductDetailState extends State<ProductDetail> {
                   ),
                 ),
 
-                //product-detail image container
-                Center(
-                  child: Image.asset("images/headphone2.png", height: 400),
-                ),
+                //SizedBox(height: 90),
               ],
             ),
 
@@ -70,12 +75,12 @@ class _ProductDetailState extends State<ProductDetail> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Headphone',
+                          widget.name,
                           style: AppWidget.boldTextFieldStyle(),
                         ),
 
                         Text(
-                          '\$300',
+                          widget.price,
                           style: TextStyle(
                             color: Colors.deepOrangeAccent,
                             fontSize: 23,
@@ -89,7 +94,7 @@ class _ProductDetailState extends State<ProductDetail> {
                     SizedBox(height: 20),
 
                     Text(
-                      "The product is very good. It have 1 year warrenty. These headphones are too good like you can also listen to a person who is speaking slowing but be aware ifthe speaks loudly.",
+                      widget.detail,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 70),
@@ -98,7 +103,7 @@ class _ProductDetailState extends State<ProductDetail> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Login()),
+                          MaterialPageRoute(builder: (context) => BottomNav()),
                         );
                       },
                       child: Container(
