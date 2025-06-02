@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shopping_app/Admin/add_product.dart';
 import 'package:flutter_shopping_app/Admin/admin_login.dart';
+import 'package:flutter_shopping_app/Admin/all_orders.dart';
 import 'package:flutter_shopping_app/pages/home.dart';
 import 'package:flutter_shopping_app/pages/bottom_nav.dart';
 import 'package:flutter_shopping_app/pages/login.dart';
@@ -50,11 +51,12 @@ class MyApp extends StatelessWidget {
       //home: Home(),
       //home: BottomNav(),
       //home: ProductDetail(),
-      home: Login(),
+      //home: Login(),
       //home: Signup(),
       //home: AdminLogin(),
       //home: AddProduct(),
       //home: UploadPage(),
+      home: AllOrders(),
     );
   }
 }

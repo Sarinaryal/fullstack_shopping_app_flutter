@@ -74,22 +74,34 @@ class _OrderState extends State<Order> {
                             fit: BoxFit.cover,
                           ),
                           SizedBox(width: 20),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                ds["Product"],
-                                style: AppWidget.mediumTextStyle(),
-                              ),
-                              Text(
-                                "Rs" + ds["Price"],
-                                style: TextStyle(
-                                  color: Colors.deepOrangeAccent,
-                                  fontSize: 23,
-                                  fontWeight: FontWeight.bold,
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  ds["Product"],
+                                  style: AppWidget.mediumTextStyle(),
                                 ),
-                              ),
-                            ],
+                                Text(
+                                  "Rs" + ds["Price"],
+                                  style: TextStyle(
+                                    color: Colors.deepOrangeAccent,
+                                    fontSize: 23,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+
+                                Text(
+                                  "Status: " + ds["Status"],
+                                  style: TextStyle(
+                                    color: Colors.deepOrangeAccent,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -111,6 +123,7 @@ class _OrderState extends State<Order> {
         backgroundColor: Color(0xfff2f2f2),
         title: Text('Current Orders', style: AppWidget.boldTextFieldStyle()),
         centerTitle: true,
+        automaticallyImplyLeading: false, //hides the back arrow
       ),
       body: Container(
         margin: EdgeInsets.only(left: 20, right: 20),

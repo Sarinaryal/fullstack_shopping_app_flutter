@@ -17,8 +17,21 @@ class DatabaseMethods {
         .add(userInfoMap);
   }
 
+  updateStatus(String id) async {
+    return await FirebaseFirestore.instance
+        .collection("Orders").doc(id)
+        .update({"Status": "Delivered"});
+  }
+
   Future<Stream<QuerySnapshot>> getProducts(String category) async {
     return await FirebaseFirestore.instance.collection(category).snapshots();
+  }
+
+  Future<Stream<QuerySnapshot>> allOrders() async {
+    return await FirebaseFirestore.instance
+        .collection("Orders")
+        .where("Status", isEqualTo: "On the way")
+        .snapshots();
   }
 
   //get order detail from firestore
