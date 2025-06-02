@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_shopping_app/pages/bottom_nav.dart';
 import 'package:flutter_shopping_app/pages/home.dart';
 import 'package:flutter_shopping_app/pages/login.dart';
+import 'package:flutter_shopping_app/services/database.dart';
+import 'package:flutter_shopping_app/services/shared_pref.dart';
 import 'package:flutter_shopping_app/widget/support_widget.dart';
 
 class ProductDetail extends StatefulWidget {
@@ -19,6 +21,27 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
+  //get username from shared prefrences
+  String? name, mail, image;
+
+  getthesharedpref() async {
+    name = await SharedPreferenceHelper().getUserName();
+    mail = await SharedPreferenceHelper().getUserEmail();
+    image = await SharedPreferenceHelper().getUserImage();
+    setState(() {});
+  }
+
+  ontheload() async {
+    await getthesharedpref();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    ontheload();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,6 +124,7 @@ class _ProductDetailState extends State<ProductDetail> {
 
                     GestureDetector(
                       onTap: () {
+                        placeOrder();
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => BottomNav()),
@@ -136,5 +160,20 @@ class _ProductDetailState extends State<ProductDetail> {
     );
   }
 
-  
+  placeOrder() async {
+    Map<String, dynamic> orderInfoMap = {
+      "Product": widget.name,
+      "Price": widget.price,
+      "Name": name,
+      "Email": mail,
+      "Image": image,
+      "ProductImage": widget.image,
+    };
+    await DatabaseMethods().orderDetails(orderInfoMap);
+  }
+//showDialog()
+  calculateAmount(String amount) {
+    final calculatedAmount = (int.parse(amount) * 100);
+    return calculatedAmount.toString();
+  }
 }

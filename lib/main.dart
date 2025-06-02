@@ -20,7 +20,7 @@ Future<void> main() async {
 
   //Cloudinary Setup here
   CloudinaryContext.cloudinary = Cloudinary.fromCloudName(
-    cloudName: 'your_cloud_name', // Replace with your actual cloud name
+    cloudName: 'dgipszkn7',
   );
 
   runApp(const MyApp());
@@ -29,7 +29,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  // This widget is the root of application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,13 +46,12 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-
       //home: Onboarding(),
       //home: Home(),
       //home: BottomNav(),
       //home: ProductDetail(),
-      //home: Login(),
-      home: Signup(),
+      home: Login(),
+      //home: Signup(),
       //home: AdminLogin(),
       //home: AddProduct(),
       //home: UploadPage(),
