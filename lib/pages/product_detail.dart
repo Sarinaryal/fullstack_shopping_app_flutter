@@ -103,7 +103,7 @@ class _ProductDetailState extends State<ProductDetail> {
                         ),
 
                         Text(
-                          widget.price,
+                          "Rs" + widget.price,
                           style: TextStyle(
                             color: Colors.deepOrangeAccent,
                             fontSize: 23,

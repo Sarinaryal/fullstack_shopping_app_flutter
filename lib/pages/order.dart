@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shopping_app/services/database.dart';
+import 'package:flutter_shopping_app/services/shared_pref.dart';
 import 'package:flutter_shopping_app/widget/support_widget.dart';
 
 class Order extends StatefulWidget {
@@ -11,11 +13,38 @@ class Order extends StatefulWidget {
 
 class _OrderState extends State<Order> {
   Stream? orderStream;
+  String? email;
+
+  getthesharedpref() async {
+    email = await SharedPreferenceHelper().getUserEmail();
+    setState(() {});
+  }
+
+  getontheload() async {
+    await getthesharedpref();
+    orderStream = await DatabaseMethods().getOrders(email!);
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    getontheload();
+    super.initState();
+  }
 
   Widget allOrders() {
     return StreamBuilder(
       stream: orderStream,
       builder: (context, AsyncSnapshot snapshot) {
+        //.........
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        if (!snapshot.hasData || snapshot.data.docs.isEmpty) {
+          return Center(child: Text("No current orders."));
+        }
+        //............
         return snapshot.hasData
             ? ListView.builder(
               padding: EdgeInsets.zero,
@@ -24,56 +53,47 @@ class _OrderState extends State<Order> {
                 DocumentSnapshot ds = snapshot.data.docs[index];
 
                 return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
+                  margin: EdgeInsets.only(bottom: 20),
+                  child: Material(
+                    elevation: 3,
                     borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 10.0),
-                      Image.network(
-                        ds["Image"],
-                        height: 150,
-                        width: 150,
-                        fit: BoxFit.cover,
+                    child: Container(
+                      padding: EdgeInsets.only(left: 20, top: 10, bottom: 10),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      SizedBox(height: 10),
-                      Text(ds["Name"], style: AppWidget.smallTextStyle()),
-                      SizedBox(height: 10),
 
-                      Spacer(),
-
-                      Row(
+                      child: Row(
                         children: [
-                          Text(
-                            '\$' + ds["Price"],
-                            style: TextStyle(
-                              color: Colors.deepOrangeAccent,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Image.network(
+                            ds["ProductImage"],
+                            height: 120,
+                            width: 120,
+                            fit: BoxFit.cover,
                           ),
-
                           SizedBox(width: 20),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                color: Colors.deepOrangeAccent,
-                                borderRadius: BorderRadius.circular(6),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                ds["Product"],
+                                style: AppWidget.mediumTextStyle(),
                               ),
-                              child: Icon(
-                                Icons.add,
-                                color: Colors.white,
-                                size: 18,
+                              Text(
+                                "Rs" + ds["Price"],
+                                style: TextStyle(
+                                  color: Colors.deepOrangeAccent,
+                                  fontSize: 23,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                 );
               },
@@ -92,10 +112,10 @@ class _OrderState extends State<Order> {
         title: Text('Current Orders', style: AppWidget.boldTextFieldStyle()),
         centerTitle: true,
       ),
-      body: Container(child: Column(children: [
-
-          ],
-        )),
+      body: Container(
+        margin: EdgeInsets.only(left: 20, right: 20),
+        child: Column(children: [Expanded(child: allOrders())]),
+      ),
     );
   }
 }
