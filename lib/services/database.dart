@@ -8,6 +8,12 @@ class DatabaseMethods {
         .set(userInfoMap);
   }
 
+  Future addAllProducts(Map<String, dynamic> userInfoMap) async {
+    return await FirebaseFirestore.instance
+        .collection("Products")
+        .add(userInfoMap);
+  }
+
   Future addProduct(
     Map<String, dynamic> userInfoMap,
     String categoryname,
@@ -18,9 +24,9 @@ class DatabaseMethods {
   }
 
   updateStatus(String id) async {
-    return await FirebaseFirestore.instance
-        .collection("Orders").doc(id)
-        .update({"Status": "Delivered"});
+    return await FirebaseFirestore.instance.collection("Orders").doc(id).update(
+      {"Status": "Delivered"},
+    );
   }
 
   Future<Stream<QuerySnapshot>> getProducts(String category) async {
@@ -46,5 +52,15 @@ class DatabaseMethods {
     return await FirebaseFirestore.instance
         .collection("Orders")
         .add(userInfoMap);
+  }
+
+  Future<QuerySnapshot> search(String updatedname) async {
+    return await FirebaseFirestore.instance
+        .collection("Products")
+        .where(
+          "SearchKey",
+          isEqualTo: updatedname.substring(0, 1).toUpperCase(),
+        )
+        .get();
   }
 }

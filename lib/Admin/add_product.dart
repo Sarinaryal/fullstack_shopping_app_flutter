@@ -49,14 +49,21 @@ class _AddProductState extends State<AddProduct> {
     if (_uploadedImageUrl != null && namecontroller.text != "") {
       String addId = randomAlphaNumeric(10);
 
+      String firstletter = namecontroller.text.substring(0, 1).toUpperCase();
+
       Map<String, dynamic> addProduct = {
         "Name": namecontroller.text,
         "Image": _uploadedImageUrl,
+        "SearchKey": firstletter,
+        "UpdatedName": namecontroller.text.toUpperCase(),
         "Price": pricecontroller.text,
         "Detail": detailcontroller.text,
       };
 
-      await DatabaseMethods().addProduct(addProduct, value!).then((value) {
+      await DatabaseMethods().addProduct(addProduct, value!).then((
+        value,
+      ) async {
+        await DatabaseMethods().addAllProducts(addProduct);
         _uploadedImageUrl = null;
         namecontroller.text = '';
         ScaffoldMessenger.of(context).showSnackBar(

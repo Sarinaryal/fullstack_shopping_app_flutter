@@ -49,14 +49,14 @@ class MyApp extends StatelessWidget {
 
       //home: Onboarding(),
       //home: Home(),
-      //home: BottomNav(),
+      home: BottomNav(),
       //home: ProductDetail(),
       //home: Login(),
       //home: Signup(),
       //home: AdminLogin(),
       //home: AddProduct(),
       //home: UploadPage(),
-      home: AllOrders(),
+      //home: AllOrders(),
     );
   }
 }
