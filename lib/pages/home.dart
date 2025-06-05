@@ -84,7 +84,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfff2f2f2),
+      backgroundColor: Color.fromARGB(255, 218, 212, 221),
 
       body:
           name == null
@@ -102,8 +102,8 @@ class _HomeState extends State<Home> {
                           children: [
                             Text(
                               'Greetings!!',
-                              maxLines: 2,
-                              style: AppWidget.mediumTextStyle(),
+
+                              style: AppWidget.boldTextFieldStyle(),
                             ),
 
                             Text(name!, style: AppWidget.lightTextFieldStyle()),
@@ -338,65 +338,6 @@ class _HomeState extends State<Home> {
                                         ),
                                       ),
                                     ),
-
-                                    //second Product list
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 20,
-                                        vertical: 10,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Image.asset(
-                                            "images/watch2.png",
-                                            height: 150,
-                                            width: 150,
-                                            fit: BoxFit.cover,
-                                          ),
-                                          Text(
-                                            'Apple Watch',
-                                            style: AppWidget.mediumTextStyle(),
-                                          ),
-                                          SizedBox(height: 10),
-
-                                          Row(
-                                            children: [
-                                              Text(
-                                                '\$300',
-                                                style: TextStyle(
-                                                  color:
-                                                      Colors.deepOrangeAccent,
-                                                  fontSize: 22,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-
-                                              SizedBox(width: 50),
-                                              Container(
-                                                padding: EdgeInsets.all(4),
-                                                decoration: BoxDecoration(
-                                                  color:
-                                                      Colors.deepOrangeAccent,
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
-                                                ),
-                                                child: Icon(
-                                                  Icons.add,
-                                                  color: Colors.white,
-                                                  size: 18,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    // second Products ends
                                   ],
                                 ),
                               ),

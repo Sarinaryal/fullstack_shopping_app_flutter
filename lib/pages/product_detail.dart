@@ -45,7 +45,7 @@ class _ProductDetailState extends State<ProductDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfffef5f1),
+      backgroundColor: Color.fromARGB(255, 218, 212, 221),
       body: Container(
         padding: EdgeInsets.only(top: 50),
         child: Column(
@@ -71,10 +71,9 @@ class _ProductDetailState extends State<ProductDetail> {
                     child: Icon(Icons.arrow_back_ios_new_outlined),
                   ),
                 ),
-
-                //SizedBox(height: 90),
               ],
             ),
+            SizedBox(height: 10),
 
             //Container for product-description
             Expanded(
@@ -168,13 +167,14 @@ class _ProductDetailState extends State<ProductDetail> {
       "Email": mail,
       "Image": image,
       "ProductImage": widget.image,
-      "Status" : "On the way"
+      "Status": "On the way",
     };
     await DatabaseMethods().orderDetails(orderInfoMap);
   }
-//showDialog()
-  calculateAmount(String amount) {
-    final calculatedAmount = (int.parse(amount) * 100);
-    return calculatedAmount.toString();
-  }
+
+  //showDialog()
+  // calculateAmount(String amount) {
+  //   final calculatedAmount = (int.parse(amount) * 100);
+  //   return calculatedAmount.toString();
+  // }
 }

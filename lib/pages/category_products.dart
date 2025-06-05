@@ -67,16 +67,18 @@ class _CategoryProductState extends State<CategoryProduct> {
 
                       Row(
                         children: [
-                          Text(
-                            '\$' + ds["Price"],
-                            style: TextStyle(
-                              color: Colors.deepOrangeAccent,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                          Expanded(
+                            flex: 20,
+                            child: Text(
+                              'Rs' + ds["Price"],
+                              style: TextStyle(
+                                color: Colors.deepOrangeAccent,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
 
-                          SizedBox(width: 20),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -92,16 +94,19 @@ class _CategoryProductState extends State<CategoryProduct> {
                                 ),
                               );
                             },
-                            child: Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                color: Colors.deepOrangeAccent,
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Icon(
-                                Icons.add,
-                                color: Colors.white,
-                                size: 18,
+                            child: Expanded(
+                              flex: 1,
+                              child: Container(
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                  color: Colors.deepOrangeAccent,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
                               ),
                             ),
                           ),
@@ -120,9 +125,9 @@ class _CategoryProductState extends State<CategoryProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfff2f2f2),
+      backgroundColor: Color.fromARGB(255, 218, 212, 221),
 
-      appBar: AppBar(backgroundColor: Color(0xfff2f2f2)),
+      appBar: AppBar(backgroundColor: Color.fromARGB(255, 218, 212, 221)),
 
       body: Container(
         margin: EdgeInsets.only(left: 20, right: 20),

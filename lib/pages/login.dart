@@ -60,178 +60,191 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('images/imgLogin.png'),
-              fit: BoxFit.cover,
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/imgLogin2.png'),
+            fit: BoxFit.cover,
           ),
-          //margin: EdgeInsets.only(left: 20, right: 20),
-          child: Form(
-            //so that we can check the validation
-            key: _formKey,
-            child: Column(
-              //crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 90),
-                Text("Welcome Back!!", style: AppWidget.boldTextFieldStyle()),
-                Center(
-                  child: Text('Sign In', style: AppWidget.mediumTextStyle()),
+        ),
+        //margin: EdgeInsets.only(left: 20, right: 20),
+        child: Form(
+          //so that we can check the validation
+          key: _formKey,
+          child: Column(
+            //crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 90),
+              Text("Welcome Back!!", style: AppWidget.boldTextFieldStyle()),
+              Center(child: Text('Log In', style: AppWidget.mediumTextStyle())),
+              SizedBox(height: 20),
+
+              //Input Email field
+              // Text('Email', style: AppWidget.mediumTextStyle()),
+              // SizedBox(height: 10),
+              Container(
+                width: MediaQuery.of(context).size.width / 1.5,
+                padding: EdgeInsets.only(left: 20),
+                decoration: BoxDecoration(
+                  color: Color(0xFFF4F5F9),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                SizedBox(height: 20),
 
-                //Input Email field
-                // Text('Email', style: AppWidget.mediumTextStyle()),
-                // SizedBox(height: 10),
-                Container(
-                  width: MediaQuery.of(context).size.width / 1.5,
-                  padding: EdgeInsets.only(left: 20),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFF4F5F9),
-                    borderRadius: BorderRadius.circular(10),
+                child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    return null;
+                  },
+                  controller: mailcontroller,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Email',
                   ),
+                ),
+              ),
 
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
-                      }
-                      return null;
-                    },
-                    controller: mailcontroller,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Email',
+              //Input Password Field
+              SizedBox(height: 20),
+
+              //Text('Password', style: AppWidget.mediumTextStyle()),
+              //SizedBox(height: 10),
+              Container(
+                width: MediaQuery.of(context).size.width / 1.5,
+                padding: EdgeInsets.only(left: 20),
+                decoration: BoxDecoration(
+                  color: Color(0xFFF4F5F9),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+
+                child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    return null;
+                  },
+                  controller: passwordcontroller,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Password',
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+
+              //Forgot Paasword field
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Forgot Password?',
+                    style: TextStyle(
+                      color: const Color.fromARGB(255, 64, 48, 121),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                ),
+                ],
+              ),
+              SizedBox(height: 10),
 
-                //Input Password Field
-                SizedBox(height: 20),
-
-                //Text('Password', style: AppWidget.mediumTextStyle()),
-                //SizedBox(height: 10),
-                Container(
-                  width: MediaQuery.of(context).size.width / 1.5,
-                  padding: EdgeInsets.only(left: 20),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFF4F5F9),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
-                      }
-                      return null;
-                    },
-                    controller: passwordcontroller,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Password',
+              //login button
+              GestureDetector(
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    setState(() {
+                      email = mailcontroller.text;
+                      password = passwordcontroller.text;
+                    });
+                    userLogin();
+                  }
+                },
+                child: Center(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2,
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color.fromARGB(255, 64, 48, 121),
                     ),
-                  ),
-                ),
-                SizedBox(height: 10),
-
-                //Forgot Paasword field
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => AdminLogin()),
-                        );
-                      },
+                    child: Center(
                       child: Text(
-                        'Admin Login',
+                        'LOGIN',
                         style: TextStyle(
-                          color: Colors.green,
+                          color: Colors.white,
                           fontSize: 18,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                    Text(
-                      'Forgot Password?',
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+
+              //Admin Login button
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AdminLogin()),
+                  );
+                },
+                child: Center(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2,
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: const Color.fromARGB(255, 64, 48, 121),
+                        width: 2,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Admin Login',
+                        style: TextStyle(
+                          color: const Color.fromARGB(255, 64, 48, 121),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              //Dont have an account??
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Dont have an account?',
+                    style: AppWidget.lightTextFieldStyle(),
+                  ),
+
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Signup()),
+                      );
+                    },
+                    child: Text(
+                      'Sign Up',
                       style: TextStyle(
-                        color: Colors.green,
+                        color: const Color.fromARGB(255, 64, 48, 121),
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(height: 10),
-
-                //login button
-                GestureDetector(
-                  onTap: () {
-                    if (_formKey.currentState!.validate()) {
-                      setState(() {
-                        email = mailcontroller.text;
-                        password = passwordcontroller.text;
-                      });
-                      userLogin();
-                    }
-                  },
-                  child: Center(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 2,
-                      padding: EdgeInsets.symmetric(vertical: 12),
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'LOGIN',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-
-                //Dont have an account??
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Dont have an account?',
-                      style: AppWidget.lightTextFieldStyle(),
-                    ),
-
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Signup()),
-                        );
-                      },
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

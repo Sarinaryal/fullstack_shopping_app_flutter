@@ -72,9 +72,9 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfff2f2f2),
+      backgroundColor: Color.fromARGB(255, 218, 212, 221),
       appBar: AppBar(
-        backgroundColor: Color(0xfff2f2f2),
+        backgroundColor: Color.fromARGB(255, 218, 212, 221),
         title: Text('Profile', style: AppWidget.boldTextFieldStyle()),
         centerTitle: true,
         automaticallyImplyLeading: false, //hides the back arrow

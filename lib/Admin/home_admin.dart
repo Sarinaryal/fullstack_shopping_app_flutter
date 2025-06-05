@@ -14,9 +14,9 @@ class _HomeAdminState extends State<HomeAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfff2f2f2),
+      backgroundColor: Color.fromARGB(255, 218, 212, 221),
       appBar: AppBar(
-        backgroundColor: Color(0xfff2f2f2),
+        backgroundColor: Color.fromARGB(255, 218, 212, 221),
         title: Text('Home Admin', style: AppWidget.boldTextFieldStyle()),
         centerTitle: true,
       ),
@@ -40,7 +40,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                   padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
                   width: MediaQuery.of(context).size.width / 2.2,
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 177, 172, 172),
+                    color: const Color.fromARGB(255, 187, 173, 197),
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Row(
@@ -74,7 +74,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                   padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
                   width: MediaQuery.of(context).size.width / 2.2,
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 177, 172, 172),
+                    color: const Color.fromARGB(255, 187, 173, 197),
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Row(

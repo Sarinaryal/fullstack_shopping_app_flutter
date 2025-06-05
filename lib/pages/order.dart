@@ -118,9 +118,9 @@ class _OrderState extends State<Order> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfff2f2f2),
+      backgroundColor: Color.fromARGB(255, 218, 212, 221),
       appBar: AppBar(
-        backgroundColor: Color(0xfff2f2f2),
+        backgroundColor: Color.fromARGB(255, 218, 212, 221),
         title: Text('Current Orders', style: AppWidget.boldTextFieldStyle()),
         centerTitle: true,
         automaticallyImplyLeading: false, //hides the back arrow

@@ -156,11 +156,14 @@ class _AllOrdersState extends State<AllOrders> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 218, 212, 221),
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 218, 212, 221),
         title: Text("All Orders", style: AppWidget.boldTextFieldStyle()),
         centerTitle: true,
       ),
       body: Container(
+        //padding: EdgeInsets.only(top: 10),
         margin: EdgeInsets.only(left: 20, right: 20),
         child: Column(children: [Expanded(child: allOrders())]),
       ),
