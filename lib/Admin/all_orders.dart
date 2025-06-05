@@ -65,8 +65,8 @@ class _AllOrdersState extends State<AllOrders> {
                             child: ClipOval(
                               child: Image.network(
                                 ds["Image"],
-                                height: 90,
-                                width: 90,
+                                height: 80,
+                                width: 80,
 
                                 fit: BoxFit.cover,
                               ),
@@ -95,9 +95,12 @@ class _AllOrdersState extends State<AllOrders> {
                                   ),
                                   SizedBox(height: 3),
 
-                                  Text(
-                                    ds["Product"],
-                                    style: AppWidget.mediumTextStyle(),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Text(
+                                      ds["Product"],
+                                      style: AppWidget.mediumTextStyle(),
+                                    ),
                                   ),
 
                                   Text(

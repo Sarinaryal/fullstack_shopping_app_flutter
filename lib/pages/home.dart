@@ -98,16 +98,15 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Hey, $name!',
-                              style: AppWidget.boldTextFieldStyle(),
+                              'Greetings!!',
+                              maxLines: 2,
+                              style: AppWidget.mediumTextStyle(),
                             ),
 
-                            Text(
-                              'Good Morning!!',
-                              style: AppWidget.lightTextFieldStyle(),
-                            ),
+                            Text(name!, style: AppWidget.lightTextFieldStyle()),
                           ],
                         ),
 

@@ -83,6 +83,8 @@ class _AdminLoginState extends State<AdminLogin> {
                 ),
                 SizedBox(height: 10),
 
+                
+
                 //Admin Login button
                 GestureDetector(
                   onTap: () {
@@ -146,7 +148,7 @@ class _AdminLoginState extends State<AdminLogin> {
         } else {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddProduct()),
+            MaterialPageRoute(builder: (context) => HomeAdmin()),
           );
         }
       });

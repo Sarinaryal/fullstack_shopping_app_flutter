@@ -69,36 +69,36 @@ class _OrderState extends State<Order> {
                         children: [
                           Image.network(
                             ds["ProductImage"],
-                            height: 120,
-                            width: 120,
+                            height: 90,
+                            width: 90,
                             fit: BoxFit.cover,
                           ),
-                          SizedBox(width: 20),
+                          SizedBox(width: 10),
                           Padding(
                             padding: const EdgeInsets.only(right: 10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+
                               children: [
-                                Text(
-                                  ds["Product"],
-                                  style: AppWidget.mediumTextStyle(),
+                                Container(
+                                  width: MediaQuery.of(context).size.width / 2,
+                                  child: Text(
+                                    ds["Product"],
+                                    style: AppWidget.mediumTextStyle(),
+                                  ),
                                 ),
                                 Text(
-                                  "Rs" + ds["Price"],
+                                  "Rs " + ds["Price"],
                                   style: TextStyle(
                                     color: Colors.deepOrangeAccent,
-                                    fontSize: 23,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
 
                                 Text(
                                   "Status: " + ds["Status"],
-                                  style: TextStyle(
-                                    color: Colors.deepOrangeAccent,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: AppWidget.lightTextFieldStyle(),
                                 ),
                               ],
                             ),
