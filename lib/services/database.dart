@@ -8,33 +8,25 @@ class DatabaseMethods {
         .set(userInfoMap);
   }
 
-  // Update the image URL of a user
-  // Future<void> updateUserImage(String id, String newImageUrl) async {
-  //   await FirebaseFirestore.instance.collection("users").doc(id).update({
-  //     'Image': newImageUrl,
-  //   });
-  // }
+  Future<void> updateUserImageByUid(String uid, String newImageUrl) async {
+    final querySnapshot =
+        await FirebaseFirestore.instance
+            .collection('users')
+            .where('Id', isEqualTo: uid)
+            .get();
 
-Future<void> updateUserImageByUid(String uid, String newImageUrl) async {
-  final querySnapshot = await FirebaseFirestore.instance
-      .collection('users')
-      .where('Id', isEqualTo: uid)
-      .get();
+    if (querySnapshot.docs.isNotEmpty) {
+      // Get the first matching document's ID
+      final docId = querySnapshot.docs.first.id;
 
-  if (querySnapshot.docs.isNotEmpty) {
-    // Get the first matching document's ID
-    final docId = querySnapshot.docs.first.id;
-
-    // Update the 'Image' field in that document
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(docId)
-        .update({'Image': newImageUrl});
-  } else {
-    print('No user document found with Id = $uid');
+      // Update the 'Image' field in that document
+      await FirebaseFirestore.instance.collection('users').doc(docId).update({
+        'Image': newImageUrl,
+      });
+    } else {
+      print('No user document found with Id = $uid');
+    }
   }
-}
-
 
   Future addAllProducts(Map<String, dynamic> userInfoMap) async {
     return await FirebaseFirestore.instance
@@ -56,8 +48,6 @@ Future<void> updateUserImageByUid(String uid, String newImageUrl) async {
       {"Status": "Delivered"},
     );
   }
- 
-
 
   Future<Stream<QuerySnapshot>> getProducts(String category) async {
     return await FirebaseFirestore.instance.collection(category).snapshots();
@@ -93,4 +83,9 @@ Future<void> updateUserImageByUid(String uid, String newImageUrl) async {
         )
         .get();
   }
+
+  //Displaying all products 
+  Stream<QuerySnapshot> allProducts() {
+  return FirebaseFirestore.instance.collection("Products").snapshots();
+}
 }

@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shopping_app/pages/all_products.dart';
+import 'dart:async';
 import 'package:flutter_shopping_app/pages/bottom_nav.dart';
 import 'package:flutter_shopping_app/pages/category_products.dart';
 import 'package:flutter_shopping_app/pages/product_detail.dart';
@@ -15,6 +17,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  //logic for displaying all products
+  Stream<QuerySnapshot>? productStream;
+
   List categories = [
     "images/headphone_icon.png",
     "images/laptop.png",
@@ -72,6 +77,7 @@ class _HomeState extends State<Home> {
 
   ontheload() async {
     await getthesharedpref();
+    productStream = DatabaseMethods().allProducts();
     setState(() {});
   }
 
@@ -79,6 +85,78 @@ class _HomeState extends State<Home> {
   void initState() {
     ontheload();
     super.initState();
+  }
+
+  Widget allProducts() {
+    return StreamBuilder(
+      stream: productStream,
+      builder: (context, AsyncSnapshot snapshot) {
+        //       print("Snapshot: ${snapshot.connectionState}");
+        // print("Has Data: ${snapshot.hasData}");
+        // print("Data: ${snapshot.data}");
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        if (!snapshot.hasData || snapshot.data.docs.isEmpty) {
+          return Center(child: Text("No products found."));
+        }
+
+        return ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: snapshot.data.docs.length,
+          itemBuilder: (context, index) {
+            DocumentSnapshot ds = snapshot.data.docs[index];
+
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) => ProductDetail(
+                          name: ds["Name"],
+                          detail: ds["Detail"],
+                          image: ds["Image"],
+                          price: ds["Price"],
+                        ),
+                  ),
+                );
+              },
+              child: Container(
+                margin: EdgeInsets.only(right: 20),
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  children: [
+                    Image.network(
+                      ds["Image"],
+                      height: 150,
+                      width: 150,
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox(height: 10),
+                    Text(ds["Name"], style: AppWidget.mediumTextStyle()),
+                    SizedBox(height: 5),
+                    Text(
+                      "Rs ${ds["Price"]}",
+                      style: TextStyle(
+                        color: Colors.deepOrangeAccent,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -171,7 +249,10 @@ class _HomeState extends State<Home> {
 
                           children:
                               tempSearchStore.map((element) {
-                                return buildResultCard(element);
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: buildResultCard(element),
+                                );
                               }).toList(),
                         )
                         : Expanded(
@@ -185,14 +266,6 @@ class _HomeState extends State<Home> {
                                     'Categories',
                                     style: AppWidget.mediumTextStyle(),
                                   ),
-                                  Text(
-                                    'see all',
-                                    style: TextStyle(
-                                      color: Colors.deepOrangeAccent,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
                                 ],
                               ),
 
@@ -200,22 +273,32 @@ class _HomeState extends State<Home> {
 
                               Row(
                                 children: [
-                                  Container(
-                                    height: 130,
-                                    padding: EdgeInsets.all(20),
-                                    margin: EdgeInsets.only(right: 20),
-                                    decoration: BoxDecoration(
-                                      color: Colors.deepOrangeAccent,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => AllProducts(),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      height: 130,
+                                      padding: EdgeInsets.all(20),
+                                      margin: EdgeInsets.only(right: 20),
+                                      decoration: BoxDecoration(
+                                        color: Colors.deepOrangeAccent,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
 
-                                    child: Center(
-                                      child: Text(
-                                        'All',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
+                                      child: Center(
+                                        child: Text(
+                                          'All',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -250,12 +333,22 @@ class _HomeState extends State<Home> {
                                     'All Products',
                                     style: AppWidget.mediumTextStyle(),
                                   ),
-                                  Text(
-                                    'see all',
-                                    style: TextStyle(
-                                      color: Colors.deepOrangeAccent,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => AllProducts(),
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      'see all',
+                                      style: TextStyle(
+                                        color: Colors.deepOrangeAccent,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -265,80 +358,8 @@ class _HomeState extends State<Home> {
 
                               Container(
                                 height: 250,
-                                child: ListView(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(right: 20),
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 20,
-                                        vertical: 10,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: GestureDetector(
-                                        // onTap: () {
-                                        //   Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //       builder: (context) => ProductDetail(),
-                                        //     ),
-                                        //   );
-                                        // },
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                              "images/headphone2.png",
-                                              height: 150,
-                                              width: 150,
-                                              fit: BoxFit.cover,
-                                            ),
-                                            Text(
-                                              'Headphone',
-                                              style:
-                                                  AppWidget.mediumTextStyle(),
-                                            ),
-                                            SizedBox(height: 10),
-
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  '\$100',
-                                                  style: TextStyle(
-                                                    color:
-                                                        Colors.deepOrangeAccent,
-                                                    fontSize: 22,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-
-                                                SizedBox(width: 50),
-                                                Container(
-                                                  padding: EdgeInsets.all(4),
-                                                  decoration: BoxDecoration(
-                                                    color:
-                                                        Colors.deepOrangeAccent,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          6,
-                                                        ),
-                                                  ),
-                                                  child: Icon(
-                                                    Icons.add,
-                                                    color: Colors.white,
-                                                    size: 18,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                child: Column(
+                                  children: [Expanded(child: allProducts())],
                                 ),
                               ),
                             ],
@@ -373,7 +394,7 @@ class _HomeState extends State<Home> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
-        height: 100,
+        height: 90,
         child: Row(
           children: [
             ClipRRect(

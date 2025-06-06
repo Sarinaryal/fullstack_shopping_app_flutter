@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:flutter_shopping_app/pages/login.dart';
 
 //import 'package:flutter_shopping_app/pages/product_detail.dart';
